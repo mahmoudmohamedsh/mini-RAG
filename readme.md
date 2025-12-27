@@ -21,3 +21,4 @@ This is a miniaml implementation of the RAG model for qustions answering.
 - python 3.8 or later
 
 
+python boilerplate github
