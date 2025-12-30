@@ -2,8 +2,8 @@ from enum import Enum
 
 
 class ResponseSignal(Enum):
-    FILE_TYPE_NOT_SUPPORTED = ""
-    FILE_SIZE_EXCEEDED_10MB = ""
-    FILE_VALIDATE_SUCCESS = ""
-    FILE_UPLOAD_SUCCESS = ""
-    FILE_UPLOAD_FAILD = ""
+    FILE_TYPE_NOT_SUPPORTED = "File Type Not Supported"
+    FILE_SIZE_EXCEEDED_10MB = "File size Exceed 10Mb"
+    FILE_VALIDATE_SUCCESS = "File is Valide"
+    FILE_UPLOAD_SUCCESS = "File Uploaded Successfully"
+    FILE_UPLOAD_FAILD = "File Upload Faild"

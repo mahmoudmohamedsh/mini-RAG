@@ -2,9 +2,10 @@ import aiofiles
 from fastapi import FastAPI, APIRouter, UploadFile, Depends, status
 from fastapi.responses import JSONResponse
 from src.helpers.config import get_settings, Settings
-from src.controllers import DataController, ProjectController
+from src.controllers import DataController
 from src.models import ResponseSignal
 import logging
+import os
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -17,8 +18,9 @@ router = APIRouter(
 @router.post("/upload/{project_id}")
 async def upload(project_id: str, file: UploadFile, app_settings: Settings = Depends(get_settings)):
 
+    data_controller = DataController()
     # validate the file properties
-    is_valid, signal = DataController().validate_uploaded_file(file=file)
+    is_valid, signal = data_controller.validate_uploaded_file(file=file)
 
     if not is_valid:
         return JSONResponse(
@@ -27,9 +29,10 @@ async def upload(project_id: str, file: UploadFile, app_settings: Settings = Dep
             }
         )
 
-    project_dir_path = ProjectController().get_project_path(project_id=project_id)
-
-    file_path = os.path.join(project_dir_path, file.filename)
+    file_path = data_controller.generate_unique_file_name(
+        original_file_name=file.filename,
+        project_id=project_id
+    )
 
     try:
         async with aiofiles.open(file_path, "wb") as f:
@@ -37,7 +40,7 @@ async def upload(project_id: str, file: UploadFile, app_settings: Settings = Dep
                 await f.write(chunk)
     except Exception as e:
         logger.error(f"Error while uploading file : {e}")
-        
+
         return JSONResponse(
             content={
                 "signal": ResponseSignal.FILE_UPLOAD_FAILD.value

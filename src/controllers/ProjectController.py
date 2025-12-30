@@ -1,6 +1,4 @@
-from .DataController import BaseController
-from fastapi import UploadFile
-from src.models import ResponseSignal
+from .BaseController import BaseController
 import os
 
 class ProjectController(BaseController):
