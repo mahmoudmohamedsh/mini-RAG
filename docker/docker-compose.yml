@@ -1,0 +1,14 @@
+services:
+  mongodb:
+    image: mongo:7-jammy
+    container_name: mini-rag-mongodb
+    ports:
+      - "27007:27017"
+    volumes:
+      - ./mongodb:/data/db
+    networks:
+      - backend-mini-rag
+    restart: always
+
+networks:
+  backend-mini-rag:

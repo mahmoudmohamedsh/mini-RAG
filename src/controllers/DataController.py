@@ -38,8 +38,8 @@ class DataController(BaseController):
                 project_file_dir,
                 random_string+"_"+clean_file_name
             )
-        
-        return new_file_path
+        file_id = random_string+"_"+clean_file_name
+        return new_file_path, file_id
 
     def get_clean_file_name(self, orig_file_name: str):
 
